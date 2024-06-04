@@ -27,9 +27,9 @@ const generateImageURL = (
   isRemoteImage: boolean = false
 ) => {
   const { filename, path, extension } = splitFilePath({ filePath: src });
-  const useWebp =
-    process.env.nextImageExportOptimizer_storePicturesInWEBP != undefined
-      ? process.env.nextImageExportOptimizer_storePicturesInWEBP == "true"
+  const useAvif =
+    process.env.nextImageExportOptimizer_storePicturesInAVIF != undefined
+      ? process.env.nextImageExportOptimizer_storePicturesInAVIF == "true"
       : true;
   if (
     !["JPG", "JPEG", "WEBP", "PNG", "AVIF", "GIF"].includes(
@@ -40,15 +40,15 @@ const generateImageURL = (
     // We will return the src
     return src;
   }
-  // If the images are stored as WEBP by the package, then we should change
-  // the extension to WEBP to load them correctly
+  // If the images are stored as AVIF by the package, then we should change
+  // the extension to AVIF to load them correctly
   let processedExtension = extension;
 
   if (
-    useWebp &&
+    useAvif &&
     ["JPG", "JPEG", "PNG", "GIF"].includes(extension.toUpperCase())
   ) {
-    processedExtension = "WEBP";
+    processedExtension = "AVIF";
   }
 
   let correctedPath = path;

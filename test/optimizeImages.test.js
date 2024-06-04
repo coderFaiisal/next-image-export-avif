@@ -17,7 +17,7 @@ const deleteFolder = (folderName) => {
 const filterForImages = (file) => {
   let extension = file.split(".").pop().toUpperCase();
   // Stop if the file is not an image
-  return ["JPG", "JPEG", "WEBP", "PNG", "GIF", "AVIF"].includes(extension);
+  return ["JPG", "JPEG", "PNG", "GIF", "AVIF"].includes(extension);
 };
 const getFiles = (dirPath) =>
   fs.existsSync(dirPath) ? fs.readdirSync(dirPath) : [];
@@ -31,7 +31,7 @@ const legacyConfig = `module.exports = {
   output: "export",
   transpilePackages: ["next-image-export-optimizer"],
   env: {
-    storePicturesInWEBP: "false",
+    storePicturesInAVIF: "false",
     generateAndUseBlurImages: "true",
   },
 };
@@ -49,7 +49,7 @@ const newConfig = `module.exports = {
     nextImageExportOptimizer_exportFolderPath: "out",
     nextImageExportOptimizer_exportFolderName: "nextImageExportOptimizer",
     nextImageExportOptimizer_quality: "75",
-    nextImageExportOptimizer_storePicturesInWEBP: "true",
+    nextImageExportOptimizer_storePicturesInAVIF: "true",
     nextImageExportOptimizer_generateAndUseBlurImages: "true",
     nextImageExportOptimizer_remoteImageCacheTTL: "0",
   },
@@ -67,7 +67,7 @@ const newConfigJpeg = `module.exports = {
     nextImageExportOptimizer_imageFolderPath: "public/images",
     nextImageExportOptimizer_exportFolderPath: "out",
     nextImageExportOptimizer_quality: "75",
-    nextImageExportOptimizer_storePicturesInWEBP: "false",
+    nextImageExportOptimizer_storePicturesInAVIF: "false",
     nextImageExportOptimizer_generateAndUseBlurImages: "true",
     nextImageExportOptimizer_remoteImageCacheTTL: "0",
   },
@@ -85,7 +85,7 @@ const newConfigExportFolderName = `module.exports = {
     nextImageExportOptimizer_imageFolderPath: "public/images",
     nextImageExportOptimizer_exportFolderPath: "out",
     nextImageExportOptimizer_quality: "75",
-    nextImageExportOptimizer_storePicturesInWEBP: "false",
+    nextImageExportOptimizer_storePicturesInAVIF: "false",
     nextImageExportOptimizer_generateAndUseBlurImages: "true",
     nextImageExportOptimizer_exportFolderName: "nextImageExportOptimizer2",
   },
@@ -105,7 +105,7 @@ const newConfigBasePath = `module.exports = {
     nextImageExportOptimizer_exportFolderPath: "out",
     nextImageExportOptimizer_exportFolderName: "nextImageExportOptimizer",
     nextImageExportOptimizer_quality: "75",
-    nextImageExportOptimizer_storePicturesInWEBP: "true",
+    nextImageExportOptimizer_storePicturesInAVIF: "true",
     nextImageExportOptimizer_generateAndUseBlurImages: "true",
     nextImageExportOptimizer_remoteImageCacheTTL: "0",
   },

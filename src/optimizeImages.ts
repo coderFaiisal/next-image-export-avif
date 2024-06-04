@@ -75,7 +75,7 @@ const nextImageExportOptimizer = async function () {
   let deviceSizes = [640, 750, 828, 1080, 1200, 1920, 2048, 3840];
   let imageSizes = [16, 32, 48, 64, 96, 128, 256, 384];
   let quality = 75;
-  let storePicturesInWEBP = true;
+  let storePicturesInAVIF = true;
   let blurSize: number[] = [];
   let remoteImageCacheTTL = 0;
   let exportFolderName = "nextImageExportOptimizer";
@@ -124,14 +124,14 @@ const nextImageExportOptimizer = async function () {
     } else if (newPath?.nextImageExportOptimizer_quality !== undefined) {
       quality = Number(newPath.nextImageExportOptimizer_quality);
     }
-    if (nextjsConfig.env?.storePicturesInWEBP !== undefined) {
-      storePicturesInWEBP =
-        nextjsConfig.env.storePicturesInWEBP.toLowerCase() == "true";
+    if (nextjsConfig.env?.storePicturesInAVIF !== undefined) {
+      storePicturesInAVIF =
+        nextjsConfig.env.storePicturesInAVIF.toLowerCase() == "true";
     } else if (
-      newPath?.nextImageExportOptimizer_storePicturesInWEBP !== undefined
+      newPath?.nextImageExportOptimizer_storePicturesInAVIF !== undefined
     ) {
-      storePicturesInWEBP =
-        newPath.nextImageExportOptimizer_storePicturesInWEBP.toLowerCase() ==
+      storePicturesInAVIF =
+        newPath.nextImageExportOptimizer_storePicturesInAVIF.toLowerCase() ==
         "true";
     }
     if (nextjsConfig.env?.generateAndUseBlurImages?.toLowerCase() == "true") {
@@ -294,7 +294,6 @@ const nextImageExportOptimizer = async function () {
   // remove duplicate widths from the array
   widths = widths.filter((item, index) => widths.indexOf(item) === index);
 
-
   const progressBar = defineProgressBar();
   if (allImagesInImageFolder.length > 0) {
     console.log(`Using sizes: ${widths.toString()}`);
@@ -352,8 +351,8 @@ const nextImageExportOptimizer = async function () {
         const width = widths[indexWidth];
 
         const filename = path.parse(file).name;
-        if (storePicturesInWEBP) {
-          extension = "WEBP";
+        if (storePicturesInAVIF) {
+          extension = "AVIF";
         }
 
         const isStaticImage = basePath === staticImageFolderPath;
@@ -451,18 +450,22 @@ const nextImageExportOptimizer = async function () {
           transformer.resize(width);
         }
 
-        if (extension === "AVIF") {
-          if (transformer.avif) {
+        if (extension === "WEBP") {
+          if (transformer.webp) {
+            transformer.webp({ quality });
+          } else {
             const avifQuality = quality - 15;
             transformer.avif({
               quality: Math.max(avifQuality, 0),
-              chromaSubsampling: "4:2:0", // same as webp
+              chromaSubsampling: "4:2:0",
             });
-          } else {
-            transformer.webp({ quality });
           }
-        } else if (extension === "WEBP" || storePicturesInWEBP) {
-          transformer.webp({ quality });
+        } else if (extension === "AVIF" || storePicturesInAVIF) {
+          const avifQuality = quality - 15;
+          transformer.avif({
+            quality: Math.max(avifQuality, 0),
+            chromaSubsampling: "4:2:0",
+          });
         } else if (extension === "PNG") {
           transformer.png({ quality });
         } else if (extension === "JPEG" || extension === "JPG") {
@@ -611,4 +614,3 @@ if (require.main === module) {
   nextImageExportOptimizer();
 }
 module.exports = nextImageExportOptimizer;
-

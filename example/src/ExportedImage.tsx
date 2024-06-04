@@ -27,9 +27,9 @@ const generateImageURL = (
   isRemoteImage: boolean = false
 ) => {
   const { filename, path, extension } = splitFilePath({ filePath: src });
-  const useWebp =
-    process.env.nextImageExportOptimizer_storePicturesInWEBP != undefined
-      ? process.env.nextImageExportOptimizer_storePicturesInWEBP == "true"
+  const useAvif =
+    process.env.nextImageExportOptimizer_storePicturesInAVIF != undefined
+      ? process.env.nextImageExportOptimizer_storePicturesInAVIF == "true"
       : true;
 
   if (
@@ -41,15 +41,15 @@ const generateImageURL = (
     // We will return the src
     return src;
   }
-  // If the images are stored as WEBP by the package, then we should change
-  // the extension to WEBP to load them correctly
+  // If the images are stored as AVIF by the package, then we should change
+  // the extension to AVIF to load them correctly
   let processedExtension = extension;
 
   if (
-    useWebp &&
+    useAvif &&
     ["JPG", "JPEG", "PNG", "GIF"].includes(extension.toUpperCase())
   ) {
-    processedExtension = "WEBP";
+    processedExtension = "AVIF";
   }
 
   let correctedPath = path;
@@ -142,12 +142,16 @@ const optimizedLoader = ({
   // if it is a static image, we can use the width of the original image to generate a reduced srcset that returns
   // the same image url for widths that are larger than the original image
   if (isStaticImage && originalImageWidth && width > originalImageWidth) {
-    const deviceSizes = (process.env.__NEXT_IMAGE_OPTS?.deviceSizes || [
-      640, 750, 828, 1080, 1200, 1920, 2048, 3840,
-    ]).map(Number);
-    const imageSizes = (process.env.__NEXT_IMAGE_OPTS?.imageSizes || [
-      16, 32, 48, 64, 96, 128, 256, 384,
-    ]).map(Number);
+    const deviceSizes = (
+      process.env.__NEXT_IMAGE_OPTS?.deviceSizes || [
+        640, 750, 828, 1080, 1200, 1920, 2048, 3840,
+      ]
+    ).map(Number);
+    const imageSizes = (
+      process.env.__NEXT_IMAGE_OPTS?.imageSizes || [
+        16, 32, 48, 64, 96, 128, 256, 384,
+      ]
+    ).map(Number);
     let allSizes: number[] = [...deviceSizes, ...imageSizes];
     allSizes = allSizes.filter((v, i, a) => a.indexOf(v) === i);
     allSizes.sort((a, b) => a - b);
