@@ -5,6 +5,7 @@
     "dev": "next dev",
     "build": "next build",
     "export": "next build && cd .. && npm run build && cd example && node ../dist/optimizeImages.js",
+    "export-test": "node ../dist/optimizeImages.js",
     "start": "next start",
     "lint": "next lint"
   },
