@@ -111,7 +111,7 @@ export default function Home() {
             style={{ objectFit: "cover" }}
           />
         </div>
-        <h2>Optimized example (static import)</h2>
+        <h2>Optimized example here (static import)</h2>
         <div
           style={{
             position: "relative",
