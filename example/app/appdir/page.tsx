@@ -4,7 +4,7 @@ import ExportedImageLegacy from "../../src/legacy/ExportedImage";
 import testPictureStatic from "../../public/chris-zhang-Jq8-3Bmh1pQ-unsplash_static.jpg";
 
 export default function Home() {
-  // get the basePath set in next.config.js
+  // get the basePath set in next.config.mjs
   const basePath = process.env.__NEXT_ROUTER_BASEPATH || "";
   return (
     <main className={styles.main}>

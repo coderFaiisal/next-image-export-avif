@@ -19,13 +19,13 @@ const loadConfig = require("next/dist/server/config").default;
 const nextConfigPathIndex = process.argv.indexOf("--nextConfigPath");
 const exportFolderPathIndex = process.argv.indexOf("--exportFolderPath");
 
-// Check if there is only one argument without a name present -> this is the case if the user does not provide the path to the next.config.js file
+// Check if there is only one argument without a name present -> this is the case if the user does not provide the path to the next.config.mjs file
 if (process.argv.length === 3) {
   // Colorize the output to red
   // Colorize the output to red
   console.error("\x1b[31m");
   console.error(
-    "next-image-export-optimizer: Breaking change: Please provide the path to the next.config.js file as an argument with the name --nextConfigPath."
+    "next-image-export-optimizer: Breaking change: Please provide the path to the next.config.mjs file as an argument with the name --nextConfigPath."
   );
   // Reset the color
   console.error("\x1b[0m");
@@ -47,7 +47,7 @@ if (nextConfigPath) {
     ? nextConfigPath
     : path.join(process.cwd(), nextConfigPath);
 } else {
-  nextConfigPath = path.join(process.cwd(), "next.config.js");
+  nextConfigPath = path.join(process.cwd(), "next.config.mjs");
 }
 const nextConfigFolder = path.dirname(nextConfigPath);
 
@@ -89,7 +89,7 @@ const nextImageExportOptimizer = async function () {
 
     // Check if nextjsConfig is an object or is undefined
     if (typeof nextjsConfig !== "object" || nextjsConfig === null) {
-      throw new Error("next.config.js is not an object");
+      throw new Error("next.config.mjs is not an object");
     }
     const legacyPath = nextjsConfig.images?.nextImageExportOptimizer;
     const newPath = nextjsConfig.env;
@@ -150,7 +150,7 @@ const nextImageExportOptimizer = async function () {
       );
     }
 
-    // Give the user a warning if the transpilePackages: ["next-image-export-optimizer"], is not set in the next.config.js
+    // Give the user a warning if the transpilePackages: ["next-image-export-optimizer"], is not set in the next.config.mjs
     if (
       nextjsConfig.transpilePackages === undefined || // transpilePackages is not set
       (nextjsConfig.transpilePackages !== undefined &&
@@ -158,13 +158,13 @@ const nextImageExportOptimizer = async function () {
     ) {
       console.warn(
         "\x1b[41m",
-        `Changed in 1.2.0: You have not set transpilePackages: ["next-image-export-optimizer"] in your next.config.js. This may cause problems with next-image-export-optimizer. Please add this line to your next.config.js.`,
+        `Changed in 1.2.0: You have not set transpilePackages: ["next-image-export-optimizer"] in your next.config.mjs. This may cause problems with next-image-export-optimizer. Please add this line to your next.config.mjs.`,
         "\x1b[0m"
       );
     }
   } catch (e) {
     // Configuration file not found
-    console.log("Could not find a next.config.js file. Use of default values");
+    console.log("Could not find a next.config.mjs file. Use of default values");
   }
 
   // if the user has specified a path for the export folder via the command line, use this path

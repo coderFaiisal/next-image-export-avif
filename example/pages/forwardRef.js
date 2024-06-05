@@ -19,7 +19,7 @@ export default function Home() {
       });
     }
   }, [imageRef]);
-  // get the basePath set in next.config.js
+  // get the basePath set in next.config.mjs
   const basePath = process.env.__NEXT_ROUTER_BASEPATH || "";
 
   return (

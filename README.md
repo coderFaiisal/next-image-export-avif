@@ -32,7 +32,7 @@ pnpm install next-image-export-optimizer
 Configure the library in your **Next.js** configuration file:
 
 ```javascript
-// next.config.js
+// next.config.mjs
 module.exports = {
   output: "export",
   images: {
@@ -60,8 +60,8 @@ module.exports = {
 };
 ```
 
-1. Add the above configuration to your **next.config.js**
-2. Change the default values in your **next.config.js** where appropriate. For example, specify the folder where all the images are stored (Defaults to **public/images**)
+1. Add the above configuration to your **next.config.mjs**
+2. Change the default values in your **next.config.mjs** where appropriate. For example, specify the folder where all the images are stored (Defaults to **public/images**)
 3. Change the export command in `package.json`
 
    ```diff
@@ -71,13 +71,13 @@ module.exports = {
    }
    ```
 
-   If your Next.js project is not at the root directory where you are running the commands, for example if you are using a monorepo, you can specify the location of the next.config.js as an argument to the script:
+   If your Next.js project is not at the root directory where you are running the commands, for example if you are using a monorepo, you can specify the location of the next.config.mjs as an argument to the script:
 
    ```json
-   "export": "next build && next-image-export-optimizer --nextConfigPath path/to/my/next.config.js"
+   "export": "next build && next-image-export-optimizer --nextConfigPath path/to/my/next.config.mjs"
    ```
 
-   If you want to specify the path to the output folder, you can either do so by setting the `nextImageExportOptimizer_exportFolderPath` environment variable in your **next.config.js** file or by passing the `--exportFolderPath` argument to the script:
+   If you want to specify the path to the output folder, you can either do so by setting the `nextImageExportOptimizer_exportFolderPath` environment variable in your **next.config.mjs** file or by passing the `--exportFolderPath` argument to the script:
 
    ```json
     "export": "next build && next-image-export-optimizer --exportFolderPath path/to/my/export/folder"
@@ -117,7 +117,7 @@ module.exports = {
    />;
    ```
 
-   The static import method is recommended as it informs the client about the original image size. For image sizes larger than the original width, the next largest image size in the deviceSizes array (specified in the next.config.js) will be used for the generation of the srcset attribute.
+   The static import method is recommended as it informs the client about the original image size. For image sizes larger than the original width, the next largest image size in the deviceSizes array (specified in the next.config.mjs) will be used for the generation of the srcset attribute.
 
    For the dynamic import method, this library will create duplicates of the original image for each image size in the deviceSizes array that is larger than the original image size.
 
@@ -137,7 +137,7 @@ module.exports = {
    />;
    ```
 
-   In order for the image optimization at build time to work correctly, you have to specify all remote image urls in a file called **remoteOptimizedImages.js** in the root directory of your project (where the next.config.js is stored as well). The file should export an array of strings containing the urls of the remote images. Returning a promise of such array is also supported.
+   In order for the image optimization at build time to work correctly, you have to specify all remote image urls in a file called **remoteOptimizedImages.js** in the root directory of your project (where the next.config.mjs is stored as well). The file should export an array of strings containing the urls of the remote images. Returning a promise of such array is also supported.
 
    Example:
 
@@ -171,7 +171,7 @@ module.exports = {
 
    At build time, the images will be either downloaded or read from the cache. The image urls will be replaced with the optimized image urls in the Exported Image component.
 
-   You can specify the time to live of the cache in seconds by setting the `nextImageExportOptimizer_remoteImageCacheTTL` environment variable in your **next.config.js** file. The default value is 0 seconds (as the image might have changed).
+   You can specify the time to live of the cache in seconds by setting the `nextImageExportOptimizer_remoteImageCacheTTL` environment variable in your **next.config.mjs** file. The default value is 0 seconds (as the image might have changed).
 
    Set it to:
 
@@ -195,7 +195,7 @@ module.exports = {
    />;
    ```
 
-8. Overriding presets in **next.config.js**:
+8. Overriding presets in **next.config.mjs**:
 
    **Placeholder images:**
    If you do not want the automatic generation of tiny, blurry placeholder images, set the `nextImageExportOptimizer_generateAndUseBlurImages` environment variable to `false` and set the `placeholder` prop from the **\<ExportedImage />** component to `empty`.
@@ -217,7 +217,7 @@ module.exports = {
    ```
 
 10. BasePath:
-    You can set the basePath in the next.config.js file. This is useful if you want to deploy your app to a subfolder of your domain.
+    You can set the basePath in the next.config.mjs file. This is useful if you want to deploy your app to a subfolder of your domain.
 
     ```javascript
     module.exports = {

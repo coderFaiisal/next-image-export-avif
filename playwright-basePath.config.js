@@ -21,7 +21,7 @@ const newConfigBasePath = `module.exports = {
 };
 `;
 // write config file for the to be tested configuration variables to the folder
-fs.writeFileSync("example/next.config.js", newConfigBasePath);
+fs.writeFileSync("example/next.config.mjs", newConfigBasePath);
 const config = {
   use: {
     baseURL: "http://localhost:8080/",
